@@ -18,15 +18,15 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.2
     
       - name: Nuget Restore
-        working-directory: .
+        working-directory: 
         run: nuget restore -Verbosity Detailed -NonInteractive
       
       - name: Build project with msbuild
-        run: msbuild aspnet-get-started /p:Platform=AnyCpu /p:Configuration=Release /p:DeployOnBuild=true /p:WebPublishMethod=Package
+        run: msbuild . /p:Platform=AnyCpu /p:Configuration=Release /p:DeployOnBuild=true /p:WebPublishMethod=Package
 
       - name: Deploy to azure
         uses: azure/webapps-deploy@v1
         with:
           app-name: Ashwins-helloWorld
-          package: aspnet-get-started/obj/Release/Package/PackageTmp
+          package: ./obj/Release/Package/PackageTmp
           publish-profile: ${{ secrets.AZURE_CREDENTIALS_GITHUB_SECRET }}
